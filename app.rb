@@ -1,5 +1,5 @@
 require 'sinatra'
 
 get '/' do
-  erb :index, :format => :html5
+  'Hello, nginx and unicorn!'
 end
