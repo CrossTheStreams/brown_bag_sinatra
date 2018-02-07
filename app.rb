@@ -7,6 +7,15 @@ REDIS = Redis.new(host: CONFIG["redis_host"])
 THIS_NODE_NAME = CONFIG["node_name"]
 NODES = CONFIG["node_names"]
 
+if CONFIG["auth"] && CONFIG["auth"]["username"] && CONFIG["auth"]["password"]
+
+  use Rack::Auth::Basic, "Restricted Area" do |username, password|
+    username ==  CONFIG["auth"]["username"] and password == CONFIG["auth"]["password"]
+  end
+
+end
+
+
 get '/' do
   this_node_count = REDIS.get(THIS_NODE_NAME)
   if this_node_count.nil?
@@ -20,7 +29,7 @@ get '/' do
   end
   message = <<-EOF
     Greetings from #{CONFIG['node_name']}!
-    The request counts for each web node are:
+    The request count for each web node are:
   EOF
   NODES.each do |node_name| 
     count = REDIS.get(node_name) || "0"
