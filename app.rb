@@ -28,12 +28,12 @@ get '/' do
     REDIS.set(THIS_NODE_NAME, this_node_count)
   end
   message = <<-EOF
-    Hello from #{CONFIG['node_name']}!
+    Greetings from #{CONFIG['node_name']}!
     The request counts for each web node are:
   EOF
   NODES.each do |node_name| 
     count = REDIS.get(node_name) || "0"
     message << "#{node_name} => #{count}"
   end
-  message
+  message # This is the response
 end
