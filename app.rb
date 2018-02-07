@@ -29,7 +29,7 @@ get '/' do
   end
   message = <<-EOF
     Greetings from #{CONFIG['node_name']}!
-    The request count for each web node are:
+    The request counts for each web node are:
   EOF
   NODES.each do |node_name| 
     count = REDIS.get(node_name) || "0"
