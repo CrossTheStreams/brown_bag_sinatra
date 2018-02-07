@@ -1,6 +1,7 @@
+require 'yaml'
 # set path to app that will be used to configure unicorn,
 # note the trailing slash in this example
-@dir = "/path/to/app/"
+@dir = YAML::load_file("config.yml")["directory"]
 
 worker_processes 2
 working_directory @dir
